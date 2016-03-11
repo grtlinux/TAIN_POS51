@@ -42,7 +42,54 @@ public class Version {
 	private static final Logger log = Logger.getLogger(Version.class);
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	/*
+	 * 2016.03.11 : init version
+	 */
+	private static final String STR_VERSION = "VER_2016-03-11_18:40:50";
+	
+	private Version() throws Exception {
+		
+		if (flag) {
+			
+		}
+	}
+	
+	public String getVersion() throws Exception {
+		return Version.STR_VERSION;
+	}
+	
+	public void printVersion() throws Exception {
+		System.out.println(">>>>> " + Version.STR_VERSION + ".");
+	}
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	private static Version instance = null;
+	
+	public static synchronized Version getInstance() throws Exception {
+		
+		if (instance == null) {
+			instance = new Version();
+		}
+		
+		return instance;
+	}
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
+	private static void test01(String[] args) throws Exception {
+		
+		if (flag) {
+			Version.getInstance().printVersion();
+			log.debug("> " + Version.getInstance().getVersion() + ".");
+		}
+	}
+	
+	public static void main(String[] args) throws Exception {
+		
+		if (flag) log.debug(">>>>> " + new Object(){}.getClass().getEnclosingClass().getName());
+		
+		if (flag) test01(args);
+	}
 }
