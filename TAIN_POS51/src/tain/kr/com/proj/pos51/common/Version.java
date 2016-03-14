@@ -46,7 +46,7 @@ public class Version {
 	/*
 	 * 2016.03.11 : init version
 	 */
-	private static final String STR_VERSION = "VER_2016-03-11_18:40:50";
+	private static final String STR_VERSION = "TAIN_POS51_VER_2016-03-11_18:40:50";
 	
 	private Version() throws Exception {
 		
