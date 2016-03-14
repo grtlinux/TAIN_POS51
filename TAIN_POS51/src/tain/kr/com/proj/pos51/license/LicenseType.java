@@ -19,7 +19,6 @@
  */
 package tain.kr.com.proj.pos51.license;
 
-import org.apache.log4j.Logger;
 
 /**
  * Code Templates > Comments > Types
@@ -35,11 +34,57 @@ import org.apache.log4j.Logger;
  * @author ¿µ¾÷
  *
  */
-public class LicenseType {
+public enum LicenseType {
 
-	private static boolean flag = true;
+	KEY_1 ("1", "9"  ),
+	KEY_2 ("2", "8"  ),
+	KEY_3 ("3", "7"  ),
+	KEY_4 ("4", "6"  ),
+	KEY_5 ("5", "5"  ),
+	KEY_6 ("6", "4"  ),
+	KEY_7 ("7", "3"  ),
+	KEY_8 ("8", "2"  ),
+	KEY_9 ("9", "1"  ),
+	KEY_A ("A", "0"  ),
+	KEY_B ("B", "11" ),
+	KEY_C ("C", "12" ),
+	KEY_K ("K", "-20"),
+	KEY_X ("X", "."  ),
+	KEY_Y ("Y", "."  ),
+	KEY_Z ("Z", "."  ),
+	;
+	
+	private String key;
+	private String val;
+	
+	LicenseType(String key, String val) {
+		this.key = key;
+		this.val = val;
+	}
+	
+	public String getKey() {
+		return key;
+	}
 
-	private static final Logger log = Logger.getLogger(LicenseType.class);
+	public void setKey(String key) {
+		this.key = key;
+	}
+
+	public String getVal() {
+		return val;
+	}
+
+	public void setVal(String val) {
+		this.val = val;
+	}
+
+	///////////////////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////////////////
+
+	// private static boolean flag = true;
+
+	// private static final Logger log = Logger.getLogger(LicenseType.class);
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
