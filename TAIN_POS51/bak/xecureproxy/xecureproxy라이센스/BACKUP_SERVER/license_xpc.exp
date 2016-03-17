@@ -1,0 +1,12 @@
+##
+## SoftForum XecureExp license
+## You don't need to modify this file except for the line that begins with '#'.
+##
+VERSION = 2
+KEY = 4E37DEEF-BC95F0C9-53C6C66A
+SID = 0002C9289304
+USER = "우정국_우편물류_한화투자증권(백업서버)"
+PRODUCT = "XPCLIENT3"
+QTY = 1
+EXPIRE = unlimited
+ISSUED = 2016-02-10

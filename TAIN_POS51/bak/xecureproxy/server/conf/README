@@ -1,0 +1,12 @@
+XecureProxy Conf Setting
+
+1) register license file.
+- execute ./gensysid
+- you can get SYSTEM ID
+- license file name : license_xps.exp license_xpc.exp
+
+2) configure proxy.conf
+
+3) proxy_server start
+- or start.sh
+

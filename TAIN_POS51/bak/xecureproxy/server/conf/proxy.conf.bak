@@ -1,0 +1,102 @@
+# Mode (0:server, 1:serverclient)
+Mode            0
+
+# Home Directory
+HomeDir         /home/sso/xproxy_post/work/package/32/xecureproxy/server
+
+# License Mode (0: Text License , 1: Enc License ) Default 0
+LicenseMode   0
+
+# Certificate Storage Directory
+RootStoreDir    /home/sso/xproxy_post/work/package/32/xecureproxy/server/certstore
+
+# Socket Time Out ( second )
+SocketTimeOut   200
+
+# IdleTime (minutes)
+IdleTime        20
+
+# Number of Session Slots (1024 * 32)
+NumSlots	10000 
+
+# Number of Node Slots
+# efficiently NumSlots = NumNodes * NumNodes
+NumNodes        100
+
+# Number of max User( -1: infinite pool size)
+max_PoolSize    20
+
+# Number of User
+PoolSize        20
+
+# listen queue num
+# default 5
+Listen          5
+
+# authentication type  ( 0: Anonymous 1: cert base )
+Auth_Type               0
+
+# not verification cert dn list
+NoVerifyCertDN          e=cc,cn=cc,ou=cc,o=cc,l=cc,s=cc,c=KR;cn=법인-기술지원-A,ou=licensedCA,o=KICA,c=KR;cn=test0724(test0724)0090500000993,ou=SOFTFORUM,ou=personal,o=yessign,c=kr;cn=2006040410001()0090014000000960,ou=SOFTFORUM,ou=personal,o=yessign,c=kr;e=cc,cn=cc,ou=cc,o=cc,l=cc,s=cc,c=KR
+
+#user define module
+Customer
+
+# Log Level
+# LOG_FATAL     0
+# LOG_WARNING   1
+# LOG_INFO      2
+# LOG_TRACE     3
+# LOG_DEBUG     4
+
+LogLevel        4
+
+##### common configration #####
+
+# Server Certificate for SSL Handshaking
+ServerCertDN           e=cc,cn=cc,ou=cc,o=cc,l=cc,s=cc,c=KR
+#ServerCertKeyPwd        
+#ServerCertDN            cn=박창민(Park changmin)0004041900627535,ou=KMB,ou=personal4IB,o=yessign,c=kr
+#ServerCertKeyPwd        Wspw408/NgehmOaLib0IKPbuKcIJffVHUb9Ofg4TwM4=
+
+##### configration for public CA #####
+
+# Acceptable Certificate Policy
+CertPolicy      any-policy
+
+# National Authorized Certificate Authority Settings
+# [CA DN];[1 - SFCA , 0 - NOT SFCA];[1 - Cert Online Check Via RA, 0 - CRL];[CRL LDAP ADDR];[CRL DN]
+# [CA DN];[1 - SFCA , 0 - NOT SFCA];[1 - Cert Online Check Via RA, 0 - CRL];[ROOT LDAP ADDR],[CA LDAP ADDR]
+
+CaDN            cn=yessignCA,ou=LicensedCA,o=yessign,c=kr;0;0;dirsys.rootca.or.kr:389;203.233.91.35:389
+CaDN            cn=yessignCA,ou=AccreditedCA,o=yessign,c=kr;0;0;ds.rootca.or.kr:389;203.233.91.35:389
+CaDN            cn=signGATE CA,ou=licensedCA,o=KICA,c=KR;0;0;ldap.signgate.com:389;dirsys.rootca.or.kr:389
+CaDN            cn=signGATE CA2,ou=AccreditedCA,o=KICA,c=KR;0;0;ldap.signgate.com:389;dirsys.rootca.or.kr:389
+CaDN            cn=signGATE FTCA02,ou=AccreditedCA,o=KICA,c=KR;0;0;ftca.signgate.com:389;dirsys.rootca.or.kr:389
+CaDN            cn=SignKorea CA,ou=LicensedCA,o=SignKorea,c=KR;0;0;dirsys.rootca.or.kr:389;dirsys.rootca.or.kr:389
+CaDN            cn=yessignCA-TEST,ou=LicensedCA,o=yessign,c=kr;0;0;dirsys.rootca.or.kr:6020;203.233.91.234:6020
+CaDN            cn=SignGateFTCA,ou=licensedCA,o=KICA,c=KR;0;0;128.134.254.155:389;128.134.254.155:389
+CaDN            cn=SignKorea Test CA,ou=LicensedCA,o=SignKorea,c=KR;0;0;dir1.signkorea.com:689
+
+#######################################################################
+# Administration Service Address(generrally server:7303 , serverclient:7304)
+RemoteIP        127.0.0.1
+AdminPort       7303
+#ClientAdminPort 7304
+
+#######################################################################
+# Bind Address , port (generally server:1443 , serverclient:8888)
+BindAddress     127.0.0.1
+BindPort        1443
+#ClientBindPort  8888
+
+######################### Server Only Setting #########################
+# Web Server Location
+ServerAddress   192.168.10.84
+ServerPort      18080
+
+###################### ServerClient Only Setting ######################
+# SSL Port
+SSLPort 1443
+
+#######################################################################

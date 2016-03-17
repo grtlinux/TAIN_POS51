@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="euc-kr"?>
+
+<configuration>
+    <!-- LAF/W Component Configuration -->
+    <lafw>
+        <was-name>WEBLOGIC</was-name>
+        
+        <wsc-env>AXIS</wsc-env>
+        <!--wsp-env>WEBLOGIC</wsp-env-->
+
+        <!-- Log Setting -->
+        <log>
+            <format>lafx.ws.core.log.LWLogFormat</format>
+            <autoflush>true</autoflush>
+            <directory>#home/logs</directory>
+            <filedate>24</filedate><!-- 12 or 24 , 12시간 혹은 24시간 주기 -->
+            <tracelevel>
+                <laf>true</laf>
+                <sys>true</sys>
+                <err>true</err>
+                <warn>true</warn>
+                <info>true</info>
+                <debug>true</debug>
+            </tracelevel>
+            <writer><!-- both or console or file -->
+                <laf>file</laf>
+                <err>file</err>
+                <debug>file</debug>
+                <info>file</info>
+            </writer>
+            <!-- 해당 스펙의 디렉토리로 로그를 남기려고 할경우에 사용-->
+            <spec name="delivery">
+                <directory>#home/logs</directory>
+            </spec>
+            <spec name="reginorm">
+                <directory>#home/logs</directory>
+            </spec>
+        </log>
+        <handler>
+            <log-handler name="delivery">
+                <mode>body</mode>
+                <spec>delivery</spec>
+            </log-handler>
+            <filter-compression-handler name="delivery">
+                <compress-from-param> compress.from </compress-from-param>
+                <compress-to-param> compress.to </compress-to-param>
+                <filename-filter-param> filter.filename </filename-filter-param>
+                <reverse-filter-param> filter.reverse </reverse-filter-param>
+                <postservice-mode-param> postservice.mode </postservice-mode-param>
+                <postservice-moveto-param> postservice.moveto </postservice-moveto-param>
+                <postservice-renameto-param> postservice.renameto </postservice-renameto-param>
+                <attachfilelog-enable-param> attachfile.log.enable </attachfilelog-enable-param>
+                <attachfilelog-path-param> attachfile.log.path </attachfilelog-path-param>
+                <attachfilelog-file-param> attachfile.log.file </attachfilelog-file-param>
+                <attachfilelog-prefix-param> attachfile.log.prefix </attachfilelog-prefix-param>
+            </filter-compression-handler>
+            <filter-attachment-handler name="delivery">
+                <receive-directory-param> save.to </receive-directory-param>
+                <attachfilelog-enable-param> attachfile.log.enable </attachfilelog-enable-param>
+                <attachfilelog-path-param> attachfile.log.path </attachfilelog-path-param>
+                <attachfilelog-file-param> attachfile.log.file </attachfilelog-file-param>
+                <attachfilelog-prefix-param> attachfile.log.prefix </attachfilelog-prefix-param>
+            </filter-attachment-handler>
+        </handler>
+        <services>
+            <service name="AgentRegiNormService">
+                <log-handler>delivery</log-handler>
+                <filter-compression-handler>delivery</filter-compression-handler>
+                <filter-attachment-handler>delivery</filter-attachment-handler>
+            </service>
+            <service name="AgentDeliveryService">
+                <log-handler>delivery</log-handler>
+                <filter-compression-handler>delivery</filter-compression-handler>
+                <filter-attachment-handler>delivery</filter-attachment-handler>
+            </service>
+        </services>
+        <soap>
+        	<ip>10.223.2.4</ip>
+        	<port>1443</port>
+        </soap>
+        
+    </lafw>
+    <prj name="soaway-agent">
+        <validate>false</validate>
+        <src>#home/conf/soaway-agent.xml</src>
+    </prj>
+</configuration>

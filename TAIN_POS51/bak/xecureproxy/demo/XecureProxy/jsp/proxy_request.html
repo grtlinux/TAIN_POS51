@@ -1,0 +1,54 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ks_c_5601-1987">
+</head>
+<body>
+
+<br>
+1. link
+<pre>
+&lt;a href="./proxy_test.jsp?abc=def&pop=hi" >&lt;/a>
+</pre>
+<a href="./proxy_test.jsp?abc=def&pop=hi" >이동
+</a><br><br>
+2. XecureProxy 을 이용한 클라이언트 FORM Request ( POST )<br><br>
+<pre>
+&lt;form action="proxy_test.jsp?abc=def&amp;pop=hi" method="post" >
+<br>&lt;input type=text name="text_field1" >&lt;br>
+<br>&lt;input type=text name="text_field2">&lt;br>
+<br>&lt;input type=submit value="전송">
+<br>&lt;/form>
+</pre>
+
+<form action="proxy_test.jsp?abc=def&pop=hi" method="post" >
+<input type=text name="text_field1" ><br>
+<input type=text name="text_field2"><br>
+<input type=submit value="전송">
+</form>
+<br>
+
+3. XecureProxy 을 이용한 클라이언트 FORM Request ( GET )<br><br>
+
+<pre>
+&lt;form action="proxy_test.jsp" method="GET" >
+<br>&lt;input type=text name="text_field1" >&lt;br>
+<br>&lt;input type=text name="text_field2">&lt;br>
+<br>&lt;input type=submit value="전송">
+<br>&lt;/form>
+</pre>
+
+<form action="proxy_test.jsp?abc=def&pop=hi" method="GET">
+<input type=text name="text_field1" ><br>
+<input type=text name="text_field2"><br>
+<input type=submit value="전송">
+</form>
+<br>
+
+
+<br><br>
+<br><br>
+<br>
+
+</body>
+
+</html>

@@ -1,0 +1,12 @@
+##
+## SoftForum XecureExp license
+## You don't need to modify this file except for the line that begins with '#'.
+##
+VERSION = 2
+KEY = 75750058-9E12F2F9-30B0E00C
+SID = 0013211D32B9
+USER = "hcr"
+PRODUCT = "XPSERVER3"
+QTY = 1
+EXPIRE = unlimited
+ISSUED = 2014-01-20

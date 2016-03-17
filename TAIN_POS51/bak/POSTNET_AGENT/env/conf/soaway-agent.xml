@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="euc-kr"?>
+
+<soaway-agent>
+    <agent-key>HANWHAWM</agent-key>
+    <scheduler>
+        <!-- 접수신청 File 연계 -->
+        <schedule name="receiveRequest">
+            <enable>true</enable>
+            <!-- 실행 주기(crontab 형식) -->
+            <schedule-interval>07 17 * * *</schedule-interval>
+            <debug-enable>false</debug-enable>
+            <biz name="snd">postnet.agent.biz.AgentRegiNormRequestBizWithFilterFile</biz>
+            <init-params>
+              <param name="webservice.name">AgentRegiNormService</param>
+              <param name="service.divcd">cardRecevRequestESB</param>
+
+              <!-- 송신 파일 저장 위치 -->
+              <param name="compress.from"> /POSTNET_AGENT/env/attachment/send </param>
+              <param name="compress.to"> /POSTNET_AGENT/env/attachment/send </param>
+
+              <!-- 전송할 파일명 지정 -->
+              <param name="filter.filename"> send_*.txt </param>
+              <param name="postservice.mode"> MOVE </param>
+
+              <!-- 전송 이후 파일 이동시킬 위치 지정 -->
+              <param name="postservice.moveto"> /POSTNET_AGENT/env/attachment/sent </param>
+              <param name="postservice.renameto"> {filename}.{ext} </param>
+              <param name="attachfile.log.enable"> true </param>
+              <param name="attachfile.log.path"> #home/logs </param>
+              <param name="attachfile.log.file"> {date:yyyyMMdd}_AttachmentResult.log </param>
+              <param name="attachfile.log.prefix"> [yyyy/MM/dd HH:mm:ss] </param>
+            </init-params>
+        </schedule>
+        <!-- 접수결과 File 연계 -->
+        <schedule name="receiveResult">
+            <enable>true</enable>
+            <!-- 실행 주기(crontab 형식) -->
+            <schedule-interval>17 * * * *</schedule-interval>
+            <debug-enable>false</debug-enable>
+            <biz name="rcv">postnet.agent.biz.AgentRegiNormDeliveryResultBizWithFilterFile</biz>
+            <init-params>
+              <param name="webservice.name">AgentRegiNormService</param>
+              <param name="service.divcd">cardRslt.req.file</param>
+              <!-- 수신 파일 저장 위치 -->
+              <param name="save.to"> /POSTNET_AGENT/env/attachment/receive </param>
+              <param name="temp.filename"> {filename}.tmp </param>
+              <param name="attachfile.log.enable"> true </param>
+              <param name="attachfile.log.path"> #home/logs </param>
+              <param name="attachfile.log.file"> {date:yyyyMMdd}_AttachmentResult.log </param>
+              <param name="attachfile.log.prefix"> [yyyy/MM/dd HH:mm:ss] </param>
+            </init-params>
+        </schedule>
+        <!-- 배송결과(종적결과) File 연계 -->
+        <schedule name="deliveryResult">
+            <enable>true</enable>
+            <!-- 실행 주기(crontab 형식) -->
+            <schedule-interval>27 * * * *</schedule-interval>
+            <debug-enable>false</debug-enable>
+            <biz name="rcv">postnet.agent.biz.AgentRegiNormDeliveryResultBizWithFilterFile</biz>
+            <init-params>
+              <param name="webservice.name">AgentRegiNormService</param>
+              <param name="service.divcd">pCardRslt.dlv.file</param>
+              <!-- 수신 파일 저장 위치 -->
+              <param name="save.to"> /POSTNET_AGENT/env/attachment/receive </param>
+              <param name="temp.filename"> {filename}.tmp </param>
+              <param name="attachfile.log.enable"> true </param>
+              <param name="attachfile.log.path"> #home/logs </param>
+              <param name="attachfile.log.file"> {date:yyyyMMdd}_AttachmentResult.log </param>
+              <param name="attachfile.log.prefix"> [yyyy/MM/dd HH:mm:ss] </param>
+            </init-params>
+        </schedule>
+    </scheduler>
+    
+    <agent-manage-schedule>
+        <agent-log>                                   <!-- log 관련 schedule -->
+            <enable>true</enable>
+            <log-clear-interval>0 2 1 * *</log-clear-interval>
+            <log-reserved-time>1</log-reserved-time>  <!-- day 기준 -->
+        </agent-log>
+        <agent-alive>                                 <!-- alive check 관련 schedule -->
+            <enable>true</enable>
+            <alive-check-interval>0 * * * *</alive-check-interval>
+        </agent-alive>
+    </agent-manage-schedule>
+    
+    <agent-failover>
+        <retry-count>0</retry-count>                  <!-- retry 횟수 -->
+        <retry-interval>1</retry-interval>           <!-- retry 주기(sec) -->
+    </agent-failover>
+    
+</soaway-agent>
