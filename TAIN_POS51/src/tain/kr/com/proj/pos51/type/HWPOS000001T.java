@@ -289,7 +289,7 @@ public enum HWPOS000001T {
 			for (HWPOS000001T fld : HWPOS000001T.values()) {
 				
 				if (!flag) log.debug("> [" + items[i] + "]");
-				if (flag) log.debug(String.format("> [%-20s] [%s]", fld.name, items[i]));
+				if (!flag) log.debug(String.format("> [%-20s] [%s]", fld.name, items[i]));
 
 				fld.setVal(ret, items[i]);
 				++ i;

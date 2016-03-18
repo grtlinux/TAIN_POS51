@@ -26,6 +26,10 @@ import java.util.ResourceBundle;
 
 import org.apache.log4j.Logger;
 
+import tain.kr.com.proj.pos51.type.HWPOS000001D;
+import tain.kr.com.proj.pos51.type.HWPOS000001H;
+import tain.kr.com.proj.pos51.type.HWPOS000001T;
+
 /**
  * Code Templates > Comments > Types
  *
@@ -71,8 +75,11 @@ public class TestMain {
 			
 			br.close();
 		}
+	}
+	
+	private static void test02(String[] args) throws Exception {
 		
-		if (flag) {
+		if (!flag) {
 			String clsName = new Object(){}.getClass().getEnclosingClass().getName().replace('.', '/');
 			ResourceBundle rb = ResourceBundle.getBundle(clsName);
 			
@@ -92,13 +99,66 @@ public class TestMain {
 			
 			br.close();
 		}
+
+		if (flag) {
+			String clsName = new Object(){}.getClass().getEnclosingClass().getName();
+			
+			ResourceBundle rb = ResourceBundle.getBundle(clsName.replace('.', '/'));
+			
+			String path = rb.getString("TestMain.file.path");
+			String name = rb.getString("TestMain.file.name");
+			
+			BufferedReader br = new BufferedReader(new FileReader(path + File.separator + name));
+			String line = null;
+			
+			while ((line = br.readLine()) != null) {
+				if (!flag) System.out.println("[" + line + "]");
+				
+				byte[] byLine = line.getBytes("EUC-KR");
+				String dataClas = HWPOS000001H.DATA_CLAS.getString(byLine);
+				
+				switch (dataClas) {
+				case "HD":
+					if (flag) {
+						if (flag) log.debug("line   HWPOS000001H [" + line + "]");
+						String comp = HWPOS000001H.compress(byLine);
+						if (flag) log.debug("comp   HWPOS000001H [" + comp + "]");
+						String decomp = HWPOS000001H.decompress(comp.getBytes("EUC-KR"));
+						if (flag) log.debug("decomp HWPOS000001H [" + decomp + "]");
+					}
+					break;
+				case "DT":
+					if (flag) {
+						if (flag) log.debug("line   HWPOS000001D [" + line + "]");
+						String comp = HWPOS000001D.compress(byLine);
+						if (flag) log.debug("comp   HWPOS000001D [" + comp + "]");
+						String decomp = HWPOS000001D.decompress(comp.getBytes("EUC-KR"));
+						if (flag) log.debug("decomp HWPOS000001D [" + decomp + "]");
+					}
+					break;
+				case "TR":
+					if (flag) {
+						if (flag) log.debug("line   HWPOS000001T [" + line + "]");
+						String comp = HWPOS000001T.compress(byLine);
+						if (flag) log.debug("comp   HWPOS000001T [" + comp + "]");
+						String decomp = HWPOS000001T.decompress(comp.getBytes("EUC-KR"));
+						if (flag) log.debug("decomp HWPOS000001T [" + decomp + "]");
+					}
+					break;
+				default:
+					break;
+				}
+			}
+			
+			br.close();
+		}
 	}
-	
 	
 	public static void main(String[] args) throws Exception {
 		
 		if (flag) log.debug(">>>>> " + new Object(){}.getClass().getEnclosingClass().getName());
 		
 		if (flag) test01(args);
+		if (flag) test02(args);
 	}
 }

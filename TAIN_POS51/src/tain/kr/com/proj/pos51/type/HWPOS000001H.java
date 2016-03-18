@@ -287,14 +287,14 @@ public enum HWPOS000001H {
 			ret = HWPOS000001H.makeBytes();
 			
 			String[] items = new String(bytes).split("\\|", HWPOS000001H.getCntFld());   // TODO 2016.03.14 : have to fix the field count... ^^
-			if (flag) log.debug("items.length = " + items.length);
+			if (!flag) log.debug("items.length = " + items.length);
 
 			int i = 0;
 			
 			for (HWPOS000001H fld : HWPOS000001H.values()) {
 				
 				if (!flag) log.debug("> [" + items[i] + "]");
-				if (flag) log.debug(String.format("> [%-20s] [%s]", fld.name, items[i]));
+				if (!flag) log.debug(String.format("> [%-20s] [%s]", fld.name, items[i]));
 
 				fld.setVal(ret, items[i]);
 				++ i;
