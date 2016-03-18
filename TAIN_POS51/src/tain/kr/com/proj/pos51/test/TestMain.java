@@ -17,7 +17,7 @@
  * Copyright 2014, 2015, 2016 TAIN, Inc.
  *
  */
-package tain.kr.com.proj.pos51.main;
+package tain.kr.com.proj.pos51.test;
 
 import java.io.BufferedReader;
 import java.io.File;
