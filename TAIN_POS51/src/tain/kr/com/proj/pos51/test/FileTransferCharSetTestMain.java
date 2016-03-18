@@ -19,6 +19,15 @@
  */
 package tain.kr.com.proj.pos51.test;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileReader;
+import java.io.InputStreamReader;
+import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
+import java.util.ResourceBundle;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -47,15 +56,110 @@ public class FileTransferCharSetTestMain {
 
 	private static void test01(String[] args) throws Exception {
 		
+		ResourceBundle rb = null;
+		
 		if (flag) {
+			String clsName = new Object(){}.getClass().getEnclosingClass().getName();
 			
+			rb = ResourceBundle.getBundle(clsName.replace('.', '/'));
+		}
+		
+		if (flag) {
+			BufferedReader br = new BufferedReader(new FileReader(new File(rb.getString("tain.test01.in.file.path") + File.separator + rb.getString("tain.test01.in.file.name"))));
+			String line = null;
+			
+			while ((line = br.readLine()) != null) {
+				System.out.println("01 [" + line + "]");
+			}
+			
+			br.close();
 		}
 	}
 	
 	private static void test02(String[] args) throws Exception {
 		
+		ResourceBundle rb = null;
+		
 		if (flag) {
+			String clsName = new Object(){}.getClass().getEnclosingClass().getName();
 			
+			rb = ResourceBundle.getBundle(clsName.replace('.', '/'));
+		}
+		
+		if (flag) {
+			BufferedReader br = new BufferedReader(new FileReader(new File(rb.getString("tain.test02.in.file.path") + File.separator + rb.getString("tain.test02.in.file.name"))));
+			String line = null;
+			
+			while ((line = br.readLine()) != null) {
+				System.out.println("02 [" + line + "]");
+				
+				Charset euckr = Charset.forName("EUC-KR");
+				ByteBuffer byteBuffer = euckr.encode(line);
+				byte[] retBytes = byteBuffer.array();
+				
+				System.out.println("02 [" + new String(retBytes) + "]");
+			}
+			
+			br.close();
+		}
+	}
+	
+	private static void test03(String[] args) throws Exception {
+		
+		if (flag) {
+			if (flag) System.out.println();
+			
+			String hello = "æ»≥Á«œººø‰...§°§§§ß";
+			if (flag) System.out.println("hello : " + hello);
+			
+			if (flag) System.out.println();
+			
+			byte[] euckrHello = hello.getBytes(Charset.forName("euc-kr"));
+			if (flag) System.out.println("euc-kr - length : " + euckrHello.length);
+			
+			String decodeFromEuckr = new String(euckrHello, "euc-kr");
+			if (flag) System.out.println("String from euc-kr : " + decodeFromEuckr);
+			
+			if (flag) System.out.println();
+			
+			byte[] utf8Hello = decodeFromEuckr.getBytes("utf-8");
+			if (flag) System.out.println("utf-8 - length : " + utf8Hello.length);
+			
+			String decodeFromUtf8 = new String(utf8Hello, "utf-8");
+			if (flag) System.out.println("String from utf-8 : " + decodeFromUtf8);
+		}
+	}
+	
+	private static void test04(String[] args) throws Exception {
+		
+		ResourceBundle rb = null;
+		
+		if (flag) {
+			String clsName = new Object(){}.getClass().getEnclosingClass().getName();
+			
+			rb = ResourceBundle.getBundle(clsName.replace('.', '/'));
+		}
+		
+		if (flag) {
+			String path = rb.getString("tain.test02.in.file.path");
+			String name = rb.getString("tain.test02.in.file.name");
+			
+			File file = new File(path + File.separator + name);
+			
+			BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
+			String line = null;
+			
+			while ((line = br.readLine()) != null) {
+				System.out.println("02 [" + line + "]");
+				
+				Charset euckr = Charset.forName("EUC-KR");
+				ByteBuffer byteBuffer = euckr.encode(line);
+				byte[] retBytes = byteBuffer.array();
+				
+				System.out.println("02 [" + new String(retBytes) + "]");
+			}
+			
+			br.close();
 		}
 	}
 	
@@ -65,5 +169,7 @@ public class FileTransferCharSetTestMain {
 		
 		if (flag) test01(args);
 		if (flag) test02(args);
+		if (flag) test03(args);
+		if (flag) test04(args);
 	}
 }
