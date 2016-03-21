@@ -77,12 +77,55 @@ public class Pos51Main {
 			
 			if (flag) log.debug("clsName : " + rb.getString("Pos51Main.message"));
 		}
+		
+		if (flag) {
+			
+			Pos51Main main = new Pos51Main();
+			
+			if (flag) log.debug("object : " + main.getClsName());
+			if (flag) log.debug("object : " + main.getClsName().replace('.', '/'));
+		}
+	}
+	
+	private static void test02(String[] args) throws Exception {
+		
+		if (flag) {
+
+			Thread thread = null;
+			
+			for (int i=1; ; i++) {
+				if (i % 10 == 0)
+					i = 0;
+				
+				/*
+				 * HWPOS000001
+				 */
+				thread = new ThreadHWPOS000001();
+				thread.start();
+				thread.join();
+				
+				/*
+				 * POSHW000002
+				 */
+				thread = new ThreadPOSHW000002();
+				thread.start();
+				thread.join();
+				
+				/*
+				 * POSHW000003
+				 */
+				thread = new ThreadPOSHW000003();
+				thread.start();
+				thread.join();
+			}
+		}
 	}
 	
 	public static void main(String[] args) throws Exception {
 		
 		if (flag) log.debug(">>>>> " + new Object(){}.getClass().getEnclosingClass().getName());
 		
-		if (flag) test01(args);
+		if (!flag) test01(args);
+		if (flag) test02(args);
 	}
 }
