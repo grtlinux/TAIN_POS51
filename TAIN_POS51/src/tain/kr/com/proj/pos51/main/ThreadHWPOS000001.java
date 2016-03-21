@@ -19,11 +19,22 @@
  */
 package tain.kr.com.proj.pos51.main;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.ResourceBundle;
 
 import org.apache.log4j.Logger;
+
+import tain.kr.com.proj.pos51.type.HWPOS000001D;
+import tain.kr.com.proj.pos51.type.HWPOS000001H;
+import tain.kr.com.proj.pos51.type.HWPOS000001T;
 
 /**
  * Code Templates > Comments > Types
@@ -55,10 +66,12 @@ public class ThreadHWPOS000001 extends Thread {
 	private String inCharSet = null;
 	private String inPath = null;
 	private String inName = null;
+	private String inFileName = null;
 	
 	private String outCharSet = null;
 	private String outPath = null;
 	private String outName = null;
+	private String outFileName = null;
 	
 	public ThreadHWPOS000001() {
 		
@@ -81,22 +94,26 @@ public class ThreadHWPOS000001 extends Thread {
 			this.inCharSet = rb.getString("tain.hwpos000001.in.file.charset");
 			this.inPath = rb.getString("tain.hwpos000001.in.file.path").replaceAll("YYYYMMDD", this.yyyymmdd);
 			this.inName = rb.getString("tain.hwpos000001.in.file.name").replaceAll("YYYYMMDD", this.yyyymmdd);
+			this.inFileName = this.inPath + File.separator + this.inName;
 
 			this.outCharSet = rb.getString("tain.hwpos000001.out.file.charset");
 			this.outPath = rb.getString("tain.hwpos000001.out.file.path");
 			this.outName = rb.getString("tain.hwpos000001.out.file.name").replaceAll("YYYYMMDDHHMMSS", this.yyyymmddhhmmss);
+			this.outFileName = this.outPath + File.separator + this.outName;
 			
 			if (flag) {
 				/*
 				 * print properties
 				 */
-				log.debug("inCharSet  : " + this.inCharSet);
-				log.debug("inPath     : " + this.inPath);
-				log.debug("inName     : " + this.inName);
+				log.debug("inCharSet   : " + this.inCharSet);
+				log.debug("inPath      : " + this.inPath);
+				log.debug("inName      : " + this.inName);
+				log.debug("inFileName  : " + this.inFileName);
 
-				log.debug("outCharSet : " + this.outCharSet);
-				log.debug("outPath    : " + this.outPath);
-				log.debug("outName    : " + this.outName);
+				log.debug("outCharSet  : " + this.outCharSet);
+				log.debug("outPath     : " + this.outPath);
+				log.debug("outName     : " + this.outName);
+				log.debug("outFileName : " + this.outFileName);
 			}
 		}
 	}
@@ -104,7 +121,68 @@ public class ThreadHWPOS000001 extends Thread {
 	public void run() {
 		
 		if (flag) {
-			
+			System.setProperty("line.separator", "\n");
+		}
+
+		if (flag) {
+
+			try {
+				// in file
+				File inFile = new File(this.inFileName);
+				FileInputStream inFileStream = new FileInputStream(inFile);
+				BufferedReader inReader = new BufferedReader(new InputStreamReader(inFileStream, this.inCharSet));
+				
+				// out file
+				File outFile = new File(this.outFileName);
+				FileOutputStream outFileStream = new FileOutputStream(outFile);
+				OutputStreamWriter outWriter = new OutputStreamWriter(outFileStream, this.outCharSet);
+				PrintWriter writer = new PrintWriter(outWriter);
+				
+				String line = null;
+				
+				while ((line = inReader.readLine()) != null) {
+					if (flag) log.debug("[" + line + "]");
+					
+					byte[] byLine = line.getBytes();
+					String dataClas = HWPOS000001H.DATA_CLAS.getString(byLine);
+					
+					switch (dataClas) {
+					case "HD":
+						if (flag) {
+							if (flag) log.debug("line   HWPOS000001H [" + line + "]");
+							line = HWPOS000001H.compress(byLine);
+							if (flag) log.debug("comp   HWPOS000001H [" + line + "]");
+						}
+						break;
+					case "DT":
+						if (flag) {
+							if (flag) log.debug("line   HWPOS000001D [" + line + "]");
+							line = HWPOS000001D.compress(byLine);
+							if (flag) log.debug("comp   HWPOS000001D [" + line + "]");
+						}
+						break;
+					case "TR":
+						if (flag) {
+							if (flag) log.debug("line   HWPOS000001T [" + line + "]");
+							line = HWPOS000001T.compress(byLine);
+							if (flag) log.debug("comp   HWPOS000001T [" + line + "]");
+						}
+						break;
+					default:
+						break;
+					}
+
+					writer.println(line);
+				}
+				
+				inReader.close();
+				writer.close();
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				
+			}
 		}
 		
 		if (flag) {

@@ -93,14 +93,14 @@ public class Pos51Main {
 
 			Thread thread = null;
 			
-			for (int i=1; ; i++) {
+			for (int i=0; i < 100; i++) {
 				
 				if (flag) log.debug("SEQ-" + i);
 				
 				if (i % 10 == 0)
 					i = 0;
 				
-				if (flag) {
+				if (!flag) {
 					/*
 					 * HWPOS000001
 					 */
