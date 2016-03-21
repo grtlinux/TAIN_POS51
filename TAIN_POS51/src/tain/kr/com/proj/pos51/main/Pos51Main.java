@@ -94,29 +94,42 @@ public class Pos51Main {
 			Thread thread = null;
 			
 			for (int i=1; ; i++) {
+				
+				if (flag) log.debug("SEQ-" + i);
+				
 				if (i % 10 == 0)
 					i = 0;
 				
-				/*
-				 * HWPOS000001
-				 */
-				thread = new ThreadHWPOS000001();
-				thread.start();
-				thread.join();
+				if (flag) {
+					/*
+					 * HWPOS000001
+					 */
+					thread = new ThreadHWPOS000001();
+					thread.start();
+					thread.join();
+				}
 				
-				/*
-				 * POSHW000002
-				 */
-				thread = new ThreadPOSHW000002();
-				thread.start();
-				thread.join();
+				if (!flag) {
+					/*
+					 * POSHW000002
+					 */
+					thread = new ThreadPOSHW000002();
+					thread.start();
+					thread.join();
+				}
 				
-				/*
-				 * POSHW000003
-				 */
-				thread = new ThreadPOSHW000003();
-				thread.start();
-				thread.join();
+				if (!flag) {
+					/*
+					 * POSHW000003
+					 */
+					thread = new ThreadPOSHW000003();
+					thread.start();
+					thread.join();
+				}
+				
+				if (flag) {
+					try { Thread.sleep(10 * 1000); } catch (InterruptedException e) {}
+				}
 			}
 		}
 	}
