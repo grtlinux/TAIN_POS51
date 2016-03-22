@@ -19,6 +19,8 @@
  */
 package tain.kr.com.proj.pos51.v02.main;
 
+import java.util.ResourceBundle;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -45,10 +47,36 @@ public class Pos51Main {
 	
 	private String clsName = null;
 	
+	private String loopWaitSec = null;
+	
+	private int nLoopWaitSed = -1;
+	
+	/**
+	 * 
+	 * Code Templates > Comments > Constructors
+	 *
+	 * <PRE>
+	 *   -. ClassName  : Pos51Main
+	 *   -. MethodName : Pos51Main
+	 *   -. Comment    :
+	 *   -. Author     : taincokr
+	 *   -. First Date : 2016. 3. 22. {time}
+	 * </PRE>
+	 *
+	 * @throws Exception
+	 */
 	private Pos51Main() throws Exception {
 		
 		if (flag) {
+			this.clsName = this.getClass().getName();
 			
+			ResourceBundle rb = ResourceBundle.getBundle(this.clsName.replace('.', '/'));
+			
+			this.loopWaitSec = rb.getString("tain.pos51.main.loop.wait.sec");
+		}
+		
+		if (flag) {
+			this.nLoopWaitSed = Integer.parseInt(this.loopWaitSec);
 		}
 	}
 	
@@ -56,6 +84,36 @@ public class Pos51Main {
 		
 		if (flag) {
 			
+			int i = 0;
+			while (true) {
+				
+				if (flag) {
+					/*
+					 * 01.접수정보 내역    : HANWA -> S_POS_HWPOS000001_yyyymmdd_seq   ->  send_yyyymmddhhmmss.txt -> POST
+					 * 
+					 */
+				}
+				
+				if (flag) {
+					/*
+					 * 02.접수 결과        : HANWA <- R_POS_POSHW000002_yyyymmdd_seq   <-  recv_yyyymmddhhmmss.txt <- POST
+					 * 
+					 */
+				}
+				
+				if (flag) {
+					/*
+					 * 03.배달 결과        : HANWA <- R_POS_POSHW000003_yyyymmdd_seq   <- delv_yyyymmddhhmmss.txt <- POST
+					 * 
+					 */
+				}
+				
+				
+				
+				if (flag) try { Thread.sleep(1000 * this.nLoopWaitSed); } catch (InterruptedException e) {}
+				
+				i = ++i % 100;
+			}
 		}
 	}
 	
