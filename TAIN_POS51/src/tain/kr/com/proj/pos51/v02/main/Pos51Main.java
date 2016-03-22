@@ -71,6 +71,9 @@ public class Pos51Main {
 	private Pos51Main() throws Exception {
 		
 		if (flag) {
+			/*
+			 * ResourceBundle
+			 */
 			this.clsName = this.getClass().getName();
 			
 			ResourceBundle rb = ResourceBundle.getBundle(this.clsName.replace('.', '/'));
@@ -79,6 +82,16 @@ public class Pos51Main {
 		}
 		
 		if (flag) {
+			/*
+			 * System.properties
+			 */
+			this.loopWaitSec = System.getProperty("tain.pos51.main.loop.wait.sec", this.loopWaitSec);
+		}
+		
+		if (flag) {
+			/*
+			 * change parameters
+			 */
 			this.nLoopWaitSed = Integer.parseInt(this.loopWaitSec);
 		}
 	}

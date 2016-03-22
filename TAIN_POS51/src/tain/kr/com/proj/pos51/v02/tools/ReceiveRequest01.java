@@ -55,10 +55,28 @@ public class ReceiveRequest01 extends Thread {
 		super(THREAD_NAME);
 		
 		if (flag) {
+			/*
+			 * ResourceBundle
+			 */
 			this.clsName = this.getClass().getName();
 			
-			ResourceBundle rb = ResourceBundle.getBundle(this.clsName.replace('.','/'));
+			ResourceBundle rb = ResourceBundle.getBundle(this.clsName.replace('.', '/'));
 			
+			//this.loopWaitSec = rb.getString("tain.pos51.main.loop.wait.sec");
+		}
+		
+		if (flag) {
+			/*
+			 * System.properties
+			 */
+			//this.loopWaitSec = System.getProperty("tain.pos51.main.loop.wait.sec", this.loopWaitSec);
+		}
+		
+		if (flag) {
+			/*
+			 * change parameters
+			 */
+			//this.nLoopWaitSed = Integer.parseInt(this.loopWaitSec);
 		}
 	}
 	
