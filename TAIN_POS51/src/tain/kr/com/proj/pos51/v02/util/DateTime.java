@@ -17,9 +17,11 @@
  * Copyright 2014, 2015, 2016 TAIN, Inc.
  *
  */
-package tain.kr.com.proj.pos51.v02.tools;
+package tain.kr.com.proj.pos51.v02.util;
 
-import java.util.ResourceBundle;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import org.apache.log4j.Logger;
 
@@ -27,8 +29,8 @@ import org.apache.log4j.Logger;
  * Code Templates > Comments > Types
  *
  * <PRE>
- *   -. FileName   : ReceiveRequest01.java
- *   -. Package    : tain.kr.com.proj.pos51.v02.main
+ *   -. FileName   : DateTime.java
+ *   -. Package    : tain.kr.com.proj.pos51.v02.util
  *   -. Comment    :
  *   -. Author     : taincokr
  *   -. First Date : 2016. 3. 22. {time}
@@ -37,85 +39,62 @@ import org.apache.log4j.Logger;
  * @author taincokr
  *
  */
-public class ReceiveRequest01 extends Thread {
+public class DateTime {
 
 	private static boolean flag = true;
 
-	private static final Logger log = Logger.getLogger(ReceiveRequest01.class);
+	private static final Logger log = Logger.getLogger(DateTime.class);
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
-	private static final String THREAD_NAME = "RECEIVE_REQUEST_01";
-	
-	private String clsName = null;
-	
-	private String strDescription = null;
-	
-	private String strInFileCharset = null;
-	private String strInFilePath = null;
-	private String strInFileName = null;
-	
-	private String strOutFileCharset = null;
-	private String strOutFilePath = null;
-	private String strOutFileName = null;
-	
-	private String strFqFilePatn = null;
-	private String strFqFileName = null;
-	
-	public ReceiveRequest01() throws Exception {
-		
-		super(THREAD_NAME);
-		
+	private DateTime() throws Exception {
 		if (flag) {
-			/*
-			 * ResourceBundle
-			 */
-			this.clsName = this.getClass().getName();
 			
-			ResourceBundle rb = ResourceBundle.getBundle(this.clsName.replace('.', '/'));
-			
-			//this.loopWaitSec = rb.getString("tain.pos51.main.loop.wait.sec");
-		}
-		
-		if (flag) {
-			/*
-			 * System.properties
-			 */
-			//this.loopWaitSec = System.getProperty("tain.pos51.main.loop.wait.sec", this.loopWaitSec);
-		}
-		
-		if (flag) {
-			/*
-			 * change parameters
-			 */
-			//this.nLoopWaitSed = Integer.parseInt(this.loopWaitSec);
 		}
 	}
 	
-	public void run() {
+	public String getYYYYMMDD() throws Exception {
+		String ret = null;
 		
 		if (flag) {
-			
-			try {
-				
-			} catch (Exception e) {
-				//
-				e.printStackTrace();
-			} finally {
-				
-			}
+			ret = new SimpleDateFormat("yyyyMMdd", Locale.KOREA).format(new Date());
 		}
+		
+		return ret;
 	}
 	
+	public String getYYYYMMDDHHMMSS() throws Exception {
+		String ret = null;
+		
+		if (flag) {
+			ret = new SimpleDateFormat("yyyyMMddHHmmss", Locale.KOREA).format(new Date());
+		}
+		
+		return ret;
+	}
+	
+	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	private static DateTime instance = null;
+	
+	public static synchronized DateTime getInstance() throws Exception {
+		
+		if (instance == null) {
+			instance = new DateTime();
+		}
+		
+		return instance;
+	}
+	
+	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
 	private static void test01(String[] args) throws Exception {
 		
 		if (flag) {
-			Thread thr = new ReceiveRequest01();
-			thr.start();
-			thr.join();
+			log.debug("[" + DateTime.getInstance().getYYYYMMDD() + "]");
+			log.debug("[" + DateTime.getInstance().getYYYYMMDDHHMMSS() + "]");
 		}
 	}
 	
