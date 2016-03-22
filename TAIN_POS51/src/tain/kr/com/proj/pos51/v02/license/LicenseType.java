@@ -36,6 +36,7 @@ package tain.kr.com.proj.pos51.v02.license;
  */
 public enum LicenseType {
 
+	KEY_0 ("0", "A"  ),
 	KEY_1 ("1", "9"  ),
 	KEY_2 ("2", "8"  ),
 	KEY_3 ("3", "7"  ),

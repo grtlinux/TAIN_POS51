@@ -87,6 +87,7 @@ public class LicenseMap {
 		
 		if (instance == null) {
 			instance = new LicenseMap();
+			if (!flag) instance.print();
 		}
 		
 		return instance;
