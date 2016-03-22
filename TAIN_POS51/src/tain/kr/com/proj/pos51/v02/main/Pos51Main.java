@@ -23,6 +23,9 @@ import java.util.ResourceBundle;
 
 import org.apache.log4j.Logger;
 
+import tain.kr.com.proj.pos51.v02.tools.ReceiveRequest01;
+import tain.kr.com.proj.pos51.v02.tools.ReceiveResult02;
+
 /**
  * Code Templates > Comments > Types
  *
@@ -92,6 +95,9 @@ public class Pos51Main {
 					 * 01.접수정보 내역    : HANWA -> S_POS_HWPOS000001_yyyymmdd_seq   ->  send_yyyymmddhhmmss.txt -> POST
 					 * 
 					 */
+					Thread thr = new ReceiveRequest01();
+					thr.start();
+					thr.join();
 				}
 				
 				if (flag) {
@@ -99,6 +105,9 @@ public class Pos51Main {
 					 * 02.접수 결과        : HANWA <- R_POS_POSHW000002_yyyymmdd_seq   <-  recv_yyyymmddhhmmss.txt <- POST
 					 * 
 					 */
+					Thread thr = new ReceiveResult02();
+					thr.start();
+					thr.join();
 				}
 				
 				if (flag) {
@@ -106,10 +115,14 @@ public class Pos51Main {
 					 * 03.배달 결과        : HANWA <- R_POS_POSHW000003_yyyymmdd_seq   <- delv_yyyymmddhhmmss.txt <- POST
 					 * 
 					 */
+					Thread thr = new ReceiveRequest01();
+					thr.start();
+					thr.join();
 				}
 				
-				
-				
+				/*
+				 * loop waiting sleep
+				 */
 				if (flag) try { Thread.sleep(1000 * this.nLoopWaitSed); } catch (InterruptedException e) {}
 				
 				i = ++i % 100;
