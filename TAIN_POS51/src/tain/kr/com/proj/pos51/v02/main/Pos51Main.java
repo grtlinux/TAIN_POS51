@@ -42,13 +42,42 @@ public class Pos51Main {
 	private static final Logger log = Logger.getLogger(Pos51Main.class);
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	private String clsName = null;
+	
+	private Pos51Main() throws Exception {
+		
+		if (flag) {
+			
+		}
+	}
+	
+	public void execute() throws Exception {
+		
+		if (flag) {
+			
+		}
+	}
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	private static Pos51Main instance = null;
+	
+	public static synchronized Pos51Main getInstance() throws Exception {
+		
+		if (instance == null) {
+			instance = new Pos51Main();
+		}
+		
+		return instance;
+	}
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
 	private static void test01(String[] args) throws Exception {
 		
 		if (flag) {
-			
+			Pos51Main.getInstance().execute();
 		}
 	}
 	
