@@ -131,6 +131,40 @@ public class InetAddr {
 		return getInfo(expireMonth);
 	}
 	
+	public String getIpAddr() throws Exception {
+
+		StringBuffer sb = new StringBuffer();
+		
+		if (flag) {
+			
+			// InetAddress
+			InetAddress inetAddress = null;
+			
+			try {
+				inetAddress = InetAddress.getLocalHost();
+			} catch (Exception e) {
+				// e.printStackTrace();
+				throw e;
+			}
+			
+			if (!flag) log.debug(String.format("%s, %s", inetAddress.getHostName(), inetAddress.getHostAddress()));
+			
+			if (flag) {
+				/*
+				 * format : 127.0.0.l
+				 */
+				byte[] ip = inetAddress.getAddress();
+				for (int i=0; i < ip.length; i++) {
+					sb.append(String.format("%d", (int) ip[i] & 0xFF));
+					if (i != ip.length - 1)
+						sb.append('.');
+				}
+			}
+		}
+		
+		return sb.toString();
+	}
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
 	private static InetAddr instance = null;
