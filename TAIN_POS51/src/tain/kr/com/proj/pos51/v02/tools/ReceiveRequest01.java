@@ -19,6 +19,8 @@
  */
 package tain.kr.com.proj.pos51.v02.tools;
 
+import java.util.ResourceBundle;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -43,18 +45,36 @@ public class ReceiveRequest01 extends Thread {
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
+	private static final String THREAD_NAME = "RECEIVE_REQUEST_01";
+	
 	private String clsName = null;
 	
 	
 	public ReceiveRequest01() throws Exception {
 		
+		super(THREAD_NAME);
+		
 		if (flag) {
+			this.clsName = this.getClass().getName();
+			
+			ResourceBundle rb = ResourceBundle.getBundle(this.clsName.replace('.','/'));
 			
 		}
 	}
 	
 	public void run() {
 		
+		if (flag) {
+			
+			try {
+				
+			} catch (Exception e) {
+				//
+				e.printStackTrace();
+			} finally {
+				
+			}
+		}
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
@@ -63,7 +83,9 @@ public class ReceiveRequest01 extends Thread {
 	private static void test01(String[] args) throws Exception {
 		
 		if (flag) {
-			
+			Thread thr = new ReceiveRequest01();
+			thr.start();
+			thr.join();
 		}
 	}
 	
