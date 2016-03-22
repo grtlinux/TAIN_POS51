@@ -26,9 +26,9 @@ import java.util.ResourceBundle;
 
 import org.apache.log4j.Logger;
 
-import tain.kr.com.proj.pos51.type.HWPOS000001D;
-import tain.kr.com.proj.pos51.type.HWPOS000001H;
-import tain.kr.com.proj.pos51.type.HWPOS000001T;
+import tain.kr.com.proj.pos51.v01.type.HWPOS000001D;
+import tain.kr.com.proj.pos51.v01.type.HWPOS000001H;
+import tain.kr.com.proj.pos51.v01.type.HWPOS000001T;
 
 /**
  * Code Templates > Comments > Types
