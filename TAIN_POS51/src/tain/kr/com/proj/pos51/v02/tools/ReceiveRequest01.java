@@ -19,11 +19,20 @@
  */
 package tain.kr.com.proj.pos51.v02.tools;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.util.ResourceBundle;
 
 import org.apache.log4j.Logger;
 
+import tain.kr.com.proj.pos51.v01.type.HWPOS000001D;
+import tain.kr.com.proj.pos51.v01.type.HWPOS000001H;
+import tain.kr.com.proj.pos51.v01.type.HWPOS000001T;
 import tain.kr.com.proj.pos51.v02.util.DateTime;
 
 /**
@@ -132,6 +141,22 @@ public class ReceiveRequest01 extends Thread {
 	
 	public void run() {
 		
+		try {
+			for (int i=0; i < 10; i++) {
+				
+				if (!transferFile())
+					break;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			// wait some seconds
+			try { Thread.sleep(1000); } catch (InterruptedException e) {}
+		}
+	}
+	
+	private boolean transferFile() throws Exception {
+		
 		if (flag) {
 			/*
 			 * read FQ
@@ -141,10 +166,12 @@ public class ReceiveRequest01 extends Thread {
 				
 			} catch (Exception e) {
 				//
-				e.printStackTrace();
+				throw e;
 			} finally {
 				
 			}
+			
+			return false;
 		}
 		
 		if (flag) {
@@ -152,15 +179,54 @@ public class ReceiveRequest01 extends Thread {
 			 * transfer file from IN to OUT
 			 */
 			
+			BufferedReader reader = null;
+			PrintWriter writer = null;
+
+			try {
+				
+				// in file
+				File inFile = new File(this.strInFileName);
+				FileInputStream inFileStream = new FileInputStream(inFile);
+				reader = new BufferedReader(new InputStreamReader(inFileStream, this.strInFileCharset));
+				
+				// out file
+				File outFile = new File(this.strOutFileName);
+				FileOutputStream outFileStream = new FileOutputStream(outFile);
+				OutputStreamWriter outWriter = new OutputStreamWriter(outFileStream, this.strOutFileCharset);
+				writer = new PrintWriter(outWriter);
+				
+				String line = null;
+
+				while ((line = reader.readLine()) != null) {
+					if (!flag) log.debug("[" + line + "]");
+					
+					writer.println(line);
+				}
+			} catch (Exception e) {
+				//
+				throw e;
+			} finally {
+				if (reader != null) try { reader.close(); } catch (Exception e) {}
+				if (writer != null) try { writer.close(); } catch (Exception e) {}
+			}
+		}
+		
+		if (flag) {
+			/*
+			 * write FQ
+			 */
+			
 			try {
 				
 			} catch (Exception e) {
 				//
-				e.printStackTrace();
+				throw e;
 			} finally {
 				
 			}
 		}
+		
+		return true;
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
