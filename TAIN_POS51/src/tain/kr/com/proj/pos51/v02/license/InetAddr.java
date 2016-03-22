@@ -20,6 +20,9 @@
 package tain.kr.com.proj.pos51.v02.license;
 
 import java.net.InetAddress;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 import org.apache.log4j.Logger;
@@ -112,11 +115,20 @@ public class InetAddr {
 	
 	public String getInfo() throws Exception {
 		
+		String expireMonth = "205012";
+		
 		if (flag) {
-			long expireDays = Long.parseLong(this.resource.getString("tain.license.expire.days"));
+			long days = Long.parseLong(this.resource.getString("tain.license.expire.days"));
+			long expireDays = new Date().getTime() + (1000 * 60 * 60 * 24 * days);
+			
+			String expireDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.KOREA).format(new Date(expireDays));
+			
+			expireMonth = new SimpleDateFormat("yyyyMM", Locale.KOREA).format(new Date(expireDays));
+			
+			if (!flag) log.debug(String.format("expire date [%d:%s] -> [%s]", days, expireDate, expireMonth));
 		}
 
-		return getInfo("201712");
+		return getInfo(expireMonth);
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
