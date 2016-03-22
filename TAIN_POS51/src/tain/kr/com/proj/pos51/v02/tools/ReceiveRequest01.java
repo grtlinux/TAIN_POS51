@@ -17,7 +17,7 @@
  * Copyright 2014, 2015, 2016 TAIN, Inc.
  *
  */
-package tain.kr.com.proj.pos51.v02.main;
+package tain.kr.com.proj.pos51.v02.tools;
 
 import org.apache.log4j.Logger;
 
@@ -25,7 +25,7 @@ import org.apache.log4j.Logger;
  * Code Templates > Comments > Types
  *
  * <PRE>
- *   -. FileName   : Pos51Main.java
+ *   -. FileName   : ReceiveRequest01.java
  *   -. Package    : tain.kr.com.proj.pos51.v02.main
  *   -. Comment    :
  *   -. Author     : taincokr
@@ -35,13 +35,28 @@ import org.apache.log4j.Logger;
  * @author taincokr
  *
  */
-public class Pos51Main {
+public class ReceiveRequest01 extends Thread {
 
 	private static boolean flag = true;
 
-	private static final Logger log = Logger.getLogger(Pos51Main.class);
+	private static final Logger log = Logger.getLogger(ReceiveRequest01.class);
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	private String clsName = null;
+	
+	
+	public ReceiveRequest01() throws Exception {
+		
+		if (flag) {
+			
+		}
+	}
+	
+	public void run() {
+		
+	}
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 

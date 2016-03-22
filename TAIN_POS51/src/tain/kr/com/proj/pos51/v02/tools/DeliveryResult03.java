@@ -17,7 +17,7 @@
  * Copyright 2014, 2015, 2016 TAIN, Inc.
  *
  */
-package tain.kr.com.proj.pos51.v02.main;
+package tain.kr.com.proj.pos51.v02.tools;
 
 import org.apache.log4j.Logger;
 
@@ -25,8 +25,8 @@ import org.apache.log4j.Logger;
  * Code Templates > Comments > Types
  *
  * <PRE>
- *   -. FileName   : Pos51Main.java
- *   -. Package    : tain.kr.com.proj.pos51.v02.main
+ *   -. FileName   : DeliveryResult03.java
+ *   -. Package    : tain.kr.com.proj.pos51.v02.tools
  *   -. Comment    :
  *   -. Author     : taincokr
  *   -. First Date : 2016. 3. 22. {time}
@@ -35,11 +35,11 @@ import org.apache.log4j.Logger;
  * @author taincokr
  *
  */
-public class Pos51Main {
+public class DeliveryResult03 extends Thread {
 
 	private static boolean flag = true;
 
-	private static final Logger log = Logger.getLogger(Pos51Main.class);
+	private static final Logger log = Logger.getLogger(DeliveryResult03.class);
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
