@@ -131,7 +131,11 @@ public class ReceiveRequest01 extends Thread {
 		}
 
 		if (flag) {
-			log.debug("01. ReceiveRequest01 : 01.立荐脚没(郴开) : S_POS_HWPOS000001");
+			log.debug("+------------------------------------------------------------------------------------+");
+			log.debug("|                                                                                    |");
+			log.debug("|      01. ReceiveRequest01 : 01.立荐脚没(郴开) : S_POS_HWPOS000001                  |");
+			log.debug("|                                                                                    |");
+			log.debug("+------------------------------------------------------------------------------------+");
 			log.debug("FQ  FILE : " + this.strFqFileName);
 			log.debug("IN  FILE : " + this.strInFileName);
 			log.debug("OUT FILE : " + this.strOutFileName);

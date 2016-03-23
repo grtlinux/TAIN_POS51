@@ -23,6 +23,7 @@ import java.util.ResourceBundle;
 
 import org.apache.log4j.Logger;
 
+import tain.kr.com.proj.pos51.v02.tools.DeliveryResult03;
 import tain.kr.com.proj.pos51.v02.tools.ReceiveRequest01;
 import tain.kr.com.proj.pos51.v02.tools.ReceiveResult02;
 
@@ -128,7 +129,7 @@ public class Pos51Main {
 					 * 03.배달 결과        : HANWA <- R_POS_POSHW000003_yyyymmdd_seq   <- delv_yyyymmddhhmmss.txt <- POST
 					 * 
 					 */
-					Thread thr = new ReceiveRequest01();
+					Thread thr = new DeliveryResult03();
 					thr.start();
 					thr.join();
 				}

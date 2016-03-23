@@ -138,7 +138,11 @@ public class DeliveryResult03 extends Thread {
 		}
 
 		if (flag) {
-			log.debug("03. DeliveryResult03 : 03.배달결과 : R_POS_POSHW000003");
+			log.debug("+------------------------------------------------------------------------------------+");
+			log.debug("|                                                                                    |");
+			log.debug("|      03. DeliveryResult03 : 03.배달결과 : R_POS_POSHW000003                        |");
+			log.debug("|                                                                                    |");
+			log.debug("+------------------------------------------------------------------------------------+");
 			log.debug("FQ  FILE : " + this.strFqFileName);
 			log.debug("IN  FILE : " + this.strInFileName);
 			log.debug("OUT FILE : " + this.strOutFileName);

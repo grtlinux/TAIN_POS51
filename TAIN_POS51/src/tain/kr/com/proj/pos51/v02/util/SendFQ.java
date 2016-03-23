@@ -101,14 +101,15 @@ public class SendFQ {
 					break;
 				
 				this.recLen = this.line.length();
-				if (flag) log.debug(String.format("READ  (POS:%05d) [%4d:%s]", this.pos, this.recLen, this.line));
+				if (!flag) log.debug(String.format("READ  (POS:%05d) [%4d:%s]", this.pos, this.recLen, this.line));
 				
 				this.byLine = this.line.getBytes();
 				
 				String strFqRdr = FqType.FQ_RDR.getString(this.byLine);
-				if (flag) log.debug("FQ_RDR : [" + strFqRdr + "]");
 				if ("          ".equals(strFqRdr)) {
 					
+					if (flag) log.debug("FQ_RDR : [" + strFqRdr + "]");
+
 					this.strSendSeq = FqType.REC_SEQ.getString(this.byLine);
 					this.strDateTime = FqType.REC_DATE.getString(this.byLine) + FqType.REC_TIME.getString(this.byLine);
 					this.strDateTime = this.strDateTime.substring(0, 14);
