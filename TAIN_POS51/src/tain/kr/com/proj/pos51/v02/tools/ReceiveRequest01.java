@@ -131,6 +131,7 @@ public class ReceiveRequest01 extends Thread {
 		}
 
 		if (flag) {
+			log.debug("01. ReceiveRequest01 : 01.접수신청(내역) : S_POS_HWPOS000001");
 			log.debug("FQ  FILE : " + this.strFqFileName);
 			log.debug("IN  FILE : " + this.strInFileName);
 			log.debug("OUT FILE : " + this.strOutFileName);

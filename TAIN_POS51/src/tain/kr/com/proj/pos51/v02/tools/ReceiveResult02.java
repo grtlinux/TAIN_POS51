@@ -137,6 +137,7 @@ public class ReceiveResult02 extends Thread {
 		}
 
 		if (flag) {
+			log.debug("02. ReceiveResult02 : 02.접수결과 : R_POS_POSHW000002");
 			log.debug("FQ  FILE : " + this.strFqFileName);
 			log.debug("IN  FILE : " + this.strInFileName);
 			log.debug("OUT FILE : " + this.strOutFileName);
