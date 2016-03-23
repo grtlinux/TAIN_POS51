@@ -19,12 +19,20 @@
  */
 package tain.kr.com.proj.pos51.v02.tools;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FilenameFilter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.util.ResourceBundle;
 
 import org.apache.log4j.Logger;
 
 import tain.kr.com.proj.pos51.v02.util.DateTime;
+import tain.kr.com.proj.pos51.v02.util.RecvFQ;
 
 /**
  * Code Templates > Comments > Types
@@ -59,6 +67,7 @@ public class ReceiveResult02 extends Thread {
 	private String strInFileName = null;
 
 	private String strMvFilePath = null;
+	private String strMvFileName = null;
 	
 	private String strOutFileCharset = null;
 	private String strOutFilePath = null;
@@ -149,14 +158,167 @@ public class ReceiveResult02 extends Thread {
 		if (flag) {
 			
 			try {
-				
+				for (int i=0; i < 1; i++) {
+					
+					if (!transferFile())
+						break;
+				}
 			} catch (Exception e) {
 				//
 				e.printStackTrace();
 			} finally {
-				
+				// wait some seconds
+				try { Thread.sleep(1000); } catch (InterruptedException e) {}
 			}
 		}
+	}
+	
+	/*
+	 * FQ : recv
+	 */
+	
+	private RecvFQ recvFQ = null;
+	
+	private String strDate = null;
+	
+	private String strRecSeq = null;
+	
+	private int recCnt = -1;
+	
+	private boolean transferFile() throws Exception {
+		
+		if (flag) {
+			/*
+			 * read files
+			 */
+			
+			// execute root directory
+			File path = new File(this.strInFilePath);
+			
+			// return list of files
+			String[] files = path.list(new FilenameFilter() {
+				@Override
+				public boolean accept(File dir, String name) {
+					
+					int lastIndex = name.lastIndexOf("recv_");
+					if (lastIndex < 0)
+						return false;
+					
+					return true;
+				}
+			});
+			
+			if (files.length == 0) {
+				/*
+				 * if there is no list, then return false.
+				 */
+				return false;
+			}
+
+			if (flag) {
+				// print result of the above
+				for (String file : files) {
+					log.debug(">>> [" + file + "]");
+				}
+			}
+			
+			if (flag) {
+				/*
+				 * TODO : 2016.03.23 : you have to do the job of sorting file names in the below.
+				 * 1. make set
+				 * 2. sort
+				 * 3. select first file name
+				 */
+				
+				this.strInFileName = this.strInFilePath + File.separator + files[0];
+				this.strMvFileName = this.strMvFilePath + File.separator + files[0];
+				
+				this.strDate = files[0].substring(5, 13);
+				
+				if (flag) log.debug("IN FILE [" + this.strInFileName + "]");
+				if (flag) log.debug("Mv FILE [" + this.strMvFileName + "]");
+				if (flag) log.debug("DATE    [" + this.strDate + "]");
+			}
+		}
+		
+		if (flag) {
+			/*
+			 * get the FQ sequence
+			 */
+			this.recvFQ = new RecvFQ(this.strFqFileName, this.strInFileName, recCnt);
+			
+			this.strRecSeq = this.recvFQ.getRecSeq();
+			
+			this.recvFQ.close();
+			
+			this.recvFQ = null;
+		}
+		
+		if (flag) {
+			/*
+			 * transfer file from IN to OUT
+			 */
+			BufferedReader reader = null;
+			PrintWriter writer = null;
+
+			try {
+
+				// in file
+				File inFile = new File(this.strInFileName);
+				FileInputStream inFileStream = new FileInputStream(inFile);
+				reader = new BufferedReader(new InputStreamReader(inFileStream, this.strInFileCharset));
+
+				// out file
+				this.strOutFileName = this.strOutFileName.replaceAll("YYYYMMDD", this.strDate);
+				this.strOutFileName = this.strOutFileName.replaceAll("SEQ", this.strRecSeq);
+				
+				File outFile = new File(this.strOutFileName);
+				FileOutputStream outFileStream = new FileOutputStream(outFile);
+				OutputStreamWriter outWriter = new OutputStreamWriter(outFileStream, this.strOutFileCharset);
+				writer = new PrintWriter(outWriter);
+
+				String line = null;
+
+				this.recCnt = 0;
+				
+				while ((line = reader.readLine()) != null) {
+					if (flag) log.debug("[" + line + "]");
+
+					writer.println(line);
+					++ this.recCnt;
+				}
+			} catch (Exception e) {
+				//
+				throw e;
+			} finally {
+				if (reader != null) try { reader.close(); } catch (Exception e) {}
+				if (writer != null) try { writer.close(); } catch (Exception e) {}
+			}
+		}
+		
+		if (flag) {
+			/*
+			 * write a record in FQ
+			 */
+			this.recvFQ = new RecvFQ(this.strFqFileName, this.strInFileName, recCnt);
+			
+			if (flag) this.recvFQ.readAll();
+			
+			if (flag) this.recvFQ.write();
+			
+			this.recvFQ.close();
+			
+			this.recvFQ = null;
+		}
+		
+		if (flag) {
+			/*
+			 * move file from receive folder to received folder
+			 */
+			new File(this.strInFileName).renameTo(new File(this.strMvFileName));
+		}
+		
+		return true;
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////

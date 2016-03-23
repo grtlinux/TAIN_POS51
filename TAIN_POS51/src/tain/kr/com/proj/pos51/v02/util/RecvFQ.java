@@ -82,7 +82,7 @@ public class RecvFQ {
 		}
 	}
 	
-	private void readAll() throws Exception {
+	public void readAll() throws Exception {
 		
 		if (flag) {
 			
@@ -109,6 +109,41 @@ public class RecvFQ {
 				}
 			}
 		}
+	}
+
+	public String getRecSeq() throws Exception {
+		
+		String recSeq = "00";
+		
+		if (flag) {
+			
+			this.recSeq = 0;
+			this.recvSeq = 0;
+			while (true) {
+				this.pos = this.raf.getFilePointer();
+				this.line = this.raf.readLine();
+				if (this.line == null)
+					break;
+				
+				this.recSeq ++;
+
+				this.recLen = this.line.length();
+				if (flag) log.debug(String.format("(%02d) (%05d) [%4d:%s]", this.recSeq, this.pos, this.recLen, this.line));
+				
+				this.byLine = this.line.getBytes();
+				
+				String strRecFile = FqType.REC_FILE.getString(this.byLine);
+				if (flag) log.debug("REC_FILE : [" + strRecFile + "]");
+				
+				if (REC_FILE_NAME.equals(strRecFile)) {
+					this.recvSeq ++;
+				}
+			}
+			
+			recSeq = String.format("%02d", ++ this.recSeq);
+		}
+		
+		return recSeq;
 	}
 
 	public void write() throws Exception {
