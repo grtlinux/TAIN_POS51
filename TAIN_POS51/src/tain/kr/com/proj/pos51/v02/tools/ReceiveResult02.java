@@ -223,7 +223,9 @@ public class ReceiveResult02 extends Thread {
 				 * select first file.
 				 */
 				for (String file : files) {
-					log.debug(String.format("[%s]  [%s]", firstFile, file));
+					
+					if (!flag) log.debug(String.format("[%s]  [%s]", firstFile, file));
+					
 					if (file.compareTo(firstFile) < 0) {
 						firstFile = file;
 					}

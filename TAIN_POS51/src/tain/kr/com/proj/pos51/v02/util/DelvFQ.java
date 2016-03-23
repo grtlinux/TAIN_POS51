@@ -128,12 +128,12 @@ public class DelvFQ {
 				this.recSeq ++;
 
 				this.recLen = this.line.length();
-				if (flag) log.debug(String.format("(%02d) (%05d) [%4d:%s]", this.recSeq, this.pos, this.recLen, this.line));
+				if (!flag) log.debug(String.format("(%02d) (%05d) [%4d:%s]", this.recSeq, this.pos, this.recLen, this.line));
 				
 				this.byLine = this.line.getBytes();
 				
 				String strRecFile = FqType.REC_FILE.getString(this.byLine);
-				if (flag) log.debug("REC_FILE : [" + strRecFile + "]");
+				if (!flag) log.debug("REC_FILE : [" + strRecFile + "]");
 				
 				if (REC_FILE_NAME.equals(strRecFile)) {
 					this.delvSeq ++;
@@ -141,6 +141,7 @@ public class DelvFQ {
 			}
 			
 			delvSeq = String.format("%02d", ++ this.delvSeq);
+			if (flag) log.debug("REC_SEQ -> " + delvSeq);
 		}
 		
 		return delvSeq;

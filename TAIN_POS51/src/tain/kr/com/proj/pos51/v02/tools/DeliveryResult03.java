@@ -129,6 +129,7 @@ public class DeliveryResult03 extends Thread {
 			this.strInFileName  = this.strInFilePath + File.separator + this.strInFileName;
 			this.strInFileName  = this.strInFileName.replaceAll("YYYYMMDDHHMMSS", DateTime.getInstance().getYYYYMMDDHHMMSS());
 
+			this.strOutFilePath = this.strOutFilePath.replaceAll("YYYYMMDD", DateTime.getInstance().getYYYYMMDD());
 			this.strOutFileName = this.strOutFilePath + File.separator + this.strOutFileName;
 			//this.strOutFileName = this.strOutFileName.replaceAll("YYYYMMDD", DateTime.getInstance().getYYYYMMDD());
 
@@ -216,25 +217,28 @@ public class DeliveryResult03 extends Thread {
 				return false;
 			}
 
+			String firstFile = "zzz";
+			
 			if (flag) {
-				// print result of the above
+				/*
+				 * select first file.
+				 */
 				for (String file : files) {
-					log.debug(">>> [" + file + "]");
+					
+					if (!flag) log.debug(String.format("[%s]  [%s]", firstFile, file));
+					
+					if (file.compareTo(firstFile) < 0) {
+						firstFile = file;
+					}
 				}
 			}
 			
 			if (flag) {
-				/*
-				 * TODO : 2016.03.23 : you have to do the job of sorting file names in the below.
-				 * 1. make set
-				 * 2. sort
-				 * 3. select first file name
-				 */
 				
-				this.strInFileName = this.strInFilePath + File.separator + files[0];
-				this.strMvFileName = this.strMvFilePath + File.separator + files[0];
+				this.strInFileName = this.strInFilePath + File.separator + firstFile;
+				this.strMvFileName = this.strMvFilePath + File.separator + firstFile;
 				
-				this.strDate = files[0].substring(5, 13);
+				this.strDate = firstFile.substring(5, 13);
 				
 				if (flag) log.debug("IN FILE [" + this.strInFileName + "]");
 				if (flag) log.debug("Mv FILE [" + this.strMvFileName + "]");
