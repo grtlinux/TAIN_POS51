@@ -14,7 +14,7 @@ JAVA_EXE=${JAVA_HOME}/bin/java
 #------------------------------------------------------
 
 POS51_HOME=/hw01/ibridge/KANG/pos51
-LIB_HOME=${DEPLOY_HOME}/lib
+LIB_HOME=${POS51_HOME}/lib
 
 #------------------------------------------------------
 
@@ -47,31 +47,31 @@ OPTION="${OPTION} -Ddev.version=jdk1.7.0_79"
 #------------------------------------------------------
 
 OPTION="${OPTION} -Dtain.pos51.main.loop.wait.sec=60"
-OPTION="${OPTION} -Dtain.pos51.01.send.fq.file.path=%POS51_HOME%/TEST/HANWA/send/DAT/YYYYMMDD"
+OPTION="${OPTION} -Dtain.pos51.01.send.fq.file.path=${POS51_HOME}/TEST/HANWA/send/DAT/YYYYMMDD"
 OPTION="${OPTION} -Dtain.pos51.01.send.fq.file.name=OASPOS5101"
 OPTION="${OPTION} -Dtain.pos51.01.send.in.file.charset=EUC-KR"
-OPTION="${OPTION} -Dtain.pos51.01.send.in.file.path=%POS51_HOME%/TEST/HANWA/send/SEND/YYYYMMDD"
+OPTION="${OPTION} -Dtain.pos51.01.send.in.file.path=${POS51_HOME}/TEST/HANWA/send/SEND/YYYYMMDD"
 OPTION="${OPTION} -Dtain.pos51.01.send.in.file.name=S_POS_HWPOS000001_YYYYMMDD_SEQ"
 OPTION="${OPTION} -Dtain.pos51.01.send.out.file.charset=EUC-KR"
-OPTION="${OPTION} -Dtain.pos51.01.send.out.file.path=%POS51_HOME%/TEST/POST_AGENT/send"
+OPTION="${OPTION} -Dtain.pos51.01.send.out.file.path=${POS51_HOME}/TEST/POST_AGENT/send"
 OPTION="${OPTION} -Dtain.pos51.01.send.out.file.name=send_YYYYMMDDHHMMSS.txt"
 OPTION="${OPTION} -Dtain.pos51.02.recv.in.file.charset=EUC-KR"
-OPTION="${OPTION} -Dtain.pos51.02.recv.in.file.path=%POS51_HOME%/TEST/POST_AGENT/receive"
+OPTION="${OPTION} -Dtain.pos51.02.recv.in.file.path=${POS51_HOME}/TEST/POST_AGENT/receive"
 OPTION="${OPTION} -Dtain.pos51.02.recv.in.file.name=recv_YYYYMMDDHHMMSS.txt"
-OPTION="${OPTION} -Dtain.pos51.02.recv.mv.file.path=%POS51_HOME%/TEST/POST_AGENT/received"
+OPTION="${OPTION} -Dtain.pos51.02.recv.mv.file.path=${POS51_HOME}/TEST/POST_AGENT/received"
 OPTION="${OPTION} -Dtain.pos51.02.recv.out.file.charset=EUC-KR"
-OPTION="${OPTION} -Dtain.pos51.02.recv.out.file.path=%POS51_HOME%/TEST/HANWA/recv/RECV/YYYYMMDD"
+OPTION="${OPTION} -Dtain.pos51.02.recv.out.file.path=${POS51_HOME}/TEST/HANWA/recv/RECV/YYYYMMDD"
 OPTION="${OPTION} -Dtain.pos51.02.recv.out.file.name=R_POS_POSHW000002_YYYYMMDD_SEQ"
-OPTION="${OPTION} -Dtain.pos51.02.recv.fq.file.path=%POS51_HOME%/TEST/HANWA/recv/DAT/YYYYMMDD"
+OPTION="${OPTION} -Dtain.pos51.02.recv.fq.file.path=${POS51_HOME}/TEST/HANWA/recv/DAT/YYYYMMDD"
 OPTION="${OPTION} -Dtain.pos51.02.recv.fq.file.name=OARPOS5101"
 OPTION="${OPTION} -Dtain.pos51.03.delv.in.file.charset=EUC-KR"
-OPTION="${OPTION} -Dtain.pos51.03.delv.in.file.path=%POS51_HOME%/TEST/POST_AGENT/receive"
+OPTION="${OPTION} -Dtain.pos51.03.delv.in.file.path=${POS51_HOME}/TEST/POST_AGENT/receive"
 OPTION="${OPTION} -Dtain.pos51.03.delv.in.file.name=delv_YYYYMMDDHHMMSS.txt"
-OPTION="${OPTION} -Dtain.pos51.03.delv.mv.file.path=%POS51_HOME%/TEST/POST_AGENT/received"
+OPTION="${OPTION} -Dtain.pos51.03.delv.mv.file.path=${POS51_HOME}/TEST/POST_AGENT/received"
 OPTION="${OPTION} -Dtain.pos51.03.delv.out.file.charset=EUC-KR"
-OPTION="${OPTION} -Dtain.pos51.03.delv.out.file.path=%POS51_HOME%/TEST/HANWA/recv/RECV/YYYYMMDD"
+OPTION="${OPTION} -Dtain.pos51.03.delv.out.file.path=${POS51_HOME}/TEST/HANWA/recv/RECV/YYYYMMDD"
 OPTION="${OPTION} -Dtain.pos51.03.delv.out.file.name=R_POS_POSHW000003_YYYYMMDD_SEQ"
-OPTION="${OPTION} -Dtain.pos51.03.delv.fq.file.path=%POS51_HOME%/TEST/HANWA/recv/DAT/YYYYMMDD"
+OPTION="${OPTION} -Dtain.pos51.03.delv.fq.file.path=${POS51_HOME}/TEST/HANWA/recv/DAT/YYYYMMDD"
 OPTION="${OPTION} -Dtain.pos51.03.delv.fq.file.name=OARPOS5101"
 
 #------------------------------------------------------
