@@ -19,6 +19,8 @@
  */
 package tain.kr.com.proj.pos51.v02.util;
 
+import java.io.RandomAccessFile;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -42,7 +44,146 @@ public class SendFQ {
 	private static final Logger log = Logger.getLogger(SendFQ.class);
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	private static final String FQ_READER = "HWPOS00000";
+	
+	private String fileName = null;
+	private RandomAccessFile raf = null;
+	private String line = null;
+	private byte[] byLine = null;
+	private long pos = -1;
+	private int recLen = -1;
+	
+	private boolean flagExecute = false;
+	
+	public SendFQ(String fileName) throws Exception {
+		
+		if (flag) {
+			this.fileName = fileName;
+			
+			this.raf = new RandomAccessFile(this.fileName, "rw");
+		}
+	}
+	
+	private void readAll() throws Exception {
+		
+		if (flag) {
+			
+			while (true) {
+				this.pos = this.raf.getFilePointer();
+				this.line = this.raf.readLine();
+				if (this.line == null)
+					break;
+				
+				this.recLen = this.line.length();
+				if (flag) log.debug(String.format("(%05d) [%4d:%s]", this.pos, this.recLen, this.line));
+				
+				this.byLine = this.line.getBytes();
+				
+				String strFqRdr = FqType.FQ_RDR.getString(this.byLine);
+				if (flag) log.debug("FQ_RDR : [" + strFqRdr + "]");
+			}
+		}
+	}
+	
+	public boolean read() throws Exception {
+		
+		this.flagExecute = false;
+		
+		if (flag) {
+			
+			while (true) {
+				this.pos = this.raf.getFilePointer();
+				this.line = this.raf.readLine();
+				if (this.line == null)
+					break;
+				
+				this.recLen = this.line.length();
+				if (flag) log.debug(String.format("(%05d) [%4d:%s]", this.pos, this.recLen, this.line));
+				
+				this.byLine = this.line.getBytes();
+				
+				String strFqRdr = FqType.FQ_RDR.getString(this.byLine);
+				if (flag) log.debug("FQ_RDR : [" + strFqRdr + "]");
+				if ("          ".equals(strFqRdr)) {
+					this.flagExecute = true;
+					return this.flagExecute;
+				}
+			}
+		}
+		
+		return this.flagExecute;
+	}
+	
+	public boolean isFlag() throws Exception {
+		
+		return this.flagExecute;
+	}
+	
+	public void write() throws Exception {
+		
+		if (flag) {
+			this.raf.seek(this.pos);
+			
+			FqType.FQ_RDR.setVal(byLine, FQ_READER);
+			
+			this.raf.write(this.byLine);
+		}
+	}
+	
+	public void close() throws Exception {
+		
+		if (flag) {
+			if (raf != null) {
+				try {
+					raf.close();
+				} catch (Exception e) {
+					// e.printStackTrace();
+				}
+			}
+		}
+	}
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
+	private static void test01(String[] args) throws Exception {
+		
+		if (!flag) {
+			/*
+			 * just read all records from the file OASPOS5101
+			 */
+			
+			String fileName = "N:/TEMP/TEST/HANWA/send/DAT/20160323/OASPOS5101";
+			
+			SendFQ sendFQ = new SendFQ(fileName);
+			
+			sendFQ.readAll();
+			
+			sendFQ.close();
+		}
+		
+		if (flag) {
+			/*
+			 * if FQ_RDR is spaces after reading a line, write FQ_RDR into the line of the file OASPOS51 
+			 */
+			
+			String fileName = "N:/TEMP/TEST/HANWA/send/DAT/20160323/OASPOS5101";
+			
+			SendFQ sendFQ = new SendFQ(fileName);
+			
+			if (sendFQ.read()) {
+				sendFQ.write();
+			}
+			
+			sendFQ.close();
+		}
+	}
+	
+	public static void main(String[] args) throws Exception {
+		
+		if (flag) log.debug(">>>>> " + new Object(){}.getClass().getEnclosingClass().getName());
+		
+		if (flag) test01(args);
+	}
 }

@@ -31,6 +31,7 @@ import java.util.ResourceBundle;
 import org.apache.log4j.Logger;
 
 import tain.kr.com.proj.pos51.v02.util.DateTime;
+import tain.kr.com.proj.pos51.v02.util.SendFQ;
 
 /**
  * Code Templates > Comments > Types
@@ -151,6 +152,8 @@ public class ReceiveRequest01 extends Thread {
 			try { Thread.sleep(1000); } catch (InterruptedException e) {}
 		}
 	}
+	
+	private SendFQ sendFQ = null;
 	
 	private boolean transferFile() throws Exception {
 		
