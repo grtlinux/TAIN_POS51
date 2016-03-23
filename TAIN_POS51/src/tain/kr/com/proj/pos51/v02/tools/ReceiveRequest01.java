@@ -140,7 +140,7 @@ public class ReceiveRequest01 extends Thread {
 	public void run() {
 		
 		try {
-			for (int i=0; i < 10; i++) {
+			for (int i=0; i < 1; i++) {
 				
 				if (!transferFile())
 					break;
@@ -162,16 +162,11 @@ public class ReceiveRequest01 extends Thread {
 			 * read FQ
 			 */
 			
-			try {
-				
-			} catch (Exception e) {
-				//
-				throw e;
-			} finally {
-				
-			}
+			this.sendFQ = new SendFQ(this.strFqFileName);
 			
-			return false;
+			if (!this.sendFQ.read()) {
+				return false;
+			}
 		}
 		
 		if (flag) {
@@ -216,14 +211,11 @@ public class ReceiveRequest01 extends Thread {
 			 * write FQ
 			 */
 			
-			try {
-				
-			} catch (Exception e) {
-				//
-				throw e;
-			} finally {
-				
-			}
+			this.sendFQ.write();
+			
+			this.sendFQ.close();
+			
+			this.sendFQ = null;
 		}
 		
 		return true;

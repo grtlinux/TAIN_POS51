@@ -27,7 +27,7 @@ import org.apache.log4j.Logger;
  * Code Templates > Comments > Types
  *
  * <PRE>
- *   -. FileName   : RecvFQ.java
+ *   -. FileName   : DelvFQ.java
  *   -. Package    : tain.kr.com.proj.pos51.v02.util
  *   -. Comment    :
  *   -. Author     : taincokr
@@ -37,48 +37,48 @@ import org.apache.log4j.Logger;
  * @author taincokr
  *
  */
-public class RecvFQ {
+public class DelvFQ {
 
 	private static boolean flag = true;
 
-	private static final Logger log = Logger.getLogger(RecvFQ.class);
+	private static final Logger log = Logger.getLogger(DelvFQ.class);
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
-	private static final String REC_FILE_NAME = "POSHW000002";
+	private static final String REC_FILE_NAME = "POSHW000003";
 	
 	private String fileName = null;
-	private String recvName = null;
+	private String delvName = null;
 	private int recCnt = -1;
 	
 	private RandomAccessFile raf = null;
 	private String line = null;
 	private byte[] byLine = null;
 	private int recSeq = -1;
-	private int recvSeq = -1;
+	private int delvSeq = -1;
 	private long pos = -1;
 	private int recLen = -1;
 
 	private String strDate = null;
 	private String strTime = null;
 	
-	public RecvFQ(String fileName, String recvName, int recCnt) throws Exception {
+	public DelvFQ(String fileName, String delvName, int recCnt) throws Exception {
 		
 		if (flag) {
 			this.fileName = fileName;
-			this.recvName = recvName;
+			this.delvName = delvName;
 			this.recCnt = recCnt;
 			
 			this.raf = new RandomAccessFile(this.fileName, "rw");
 		}
 		
 		if (flag) {
-			int idx = this.recvName.lastIndexOf("recv_");
+			int idx = this.delvName.lastIndexOf("delv_");
 			if (idx < 1)
-				throw new Exception("ERROR : wrong file name : [" + this.recvName + "]");
+				throw new Exception("ERROR : wrong file name : [" + this.delvName + "]");
 			
-			this.strDate = this.recvName.substring(idx +  5, idx + 13);
-			this.strTime = this.recvName.substring(idx + 13, idx + 19);
+			this.strDate = this.delvName.substring(idx +  5, idx + 13);
+			this.strTime = this.delvName.substring(idx + 13, idx + 19);
 		}
 	}
 	
@@ -87,7 +87,7 @@ public class RecvFQ {
 		if (flag) {
 			
 			this.recSeq = 0;
-			this.recvSeq = 0;
+			this.delvSeq = 0;
 			while (true) {
 				this.pos = this.raf.getFilePointer();
 				this.line = this.raf.readLine();
@@ -105,7 +105,7 @@ public class RecvFQ {
 				if (flag) log.debug("REC_FILE : [" + strRecFile + "]");
 				
 				if (REC_FILE_NAME.equals(strRecFile)) {
-					this.recvSeq ++;
+					this.delvSeq ++;
 				}
 			}
 		}
@@ -122,7 +122,7 @@ public class RecvFQ {
 				FqType.FQ_SEQ  .setVal(this.byLine, String.valueOf(++ this.recSeq));
 				FqType.FQ_RDR  .setVal(this.byLine, "");
 				FqType.FQ_LEN  .setVal(this.byLine, "101");
-				FqType.REC_LEN .setVal(this.byLine, "737");
+				FqType.REC_LEN .setVal(this.byLine, "271");
 				FqType.REC_CNT .setVal(this.byLine, String.valueOf(this.recCnt));
 				FqType.REC_SR  .setVal(this.byLine, "R");
 				FqType.REC_ORG .setVal(this.byLine, "POS");
@@ -130,7 +130,7 @@ public class RecvFQ {
 				FqType.REC_FSIZ.setVal(this.byLine, "11");
 				FqType.REC_DATE.setVal(this.byLine, this.strDate);
 				FqType.REC_TIME.setVal(this.byLine, this.strTime + "000");
-				FqType.REC_SEQ .setVal(this.byLine, String.valueOf(++ this.recvSeq));
+				FqType.REC_SEQ .setVal(this.byLine, String.valueOf(++ this.delvSeq));
 				FqType.FILLER  .setVal(this.byLine, "");
 			}
 			
@@ -163,16 +163,16 @@ public class RecvFQ {
 			 */
 			
 			String fileName = "N:/TEMP/TEST/HANWA/recv/DAT/20160323/OARPOS5101";
-			String recvName = "N:/TEMP/TEST/POST_AGENT/receive/recv_20160323141728.txt";
-			int recCnt = 123;
+			String delvName = "N:/TEMP/TEST/POST_AGENT/receive/delv_20160323142708.txt";
+			int recCnt = 3333;
 			
-			RecvFQ recvFQ = new RecvFQ(fileName, recvName, recCnt);
+			DelvFQ delvFQ = new DelvFQ(fileName, delvName, recCnt);
 			
-			if (flag) recvFQ.readAll();
+			if (flag) delvFQ.readAll();
 			
-			if (flag) recvFQ.write();
+			if (flag) delvFQ.write();
 			
-			recvFQ.close();
+			delvFQ.close();
 		}
 	}
 	
