@@ -54,6 +54,8 @@ public class SendFQ {
 	private long pos = -1;
 	private int recLen = -1;
 	
+	private String strSendSeq = null;
+	private String strDateTime = null;
 	private boolean flagExecute = false;
 	
 	public SendFQ(String fileName) throws Exception {
@@ -76,7 +78,7 @@ public class SendFQ {
 					break;
 				
 				this.recLen = this.line.length();
-				if (flag) log.debug(String.format("(%05d) [%4d:%s]", this.pos, this.recLen, this.line));
+				if (flag) log.debug(String.format("READ  (POS:%05d) [%4d:%s]", this.pos, this.recLen, this.line));
 				
 				this.byLine = this.line.getBytes();
 				
@@ -99,13 +101,18 @@ public class SendFQ {
 					break;
 				
 				this.recLen = this.line.length();
-				if (flag) log.debug(String.format("(%05d) [%4d:%s]", this.pos, this.recLen, this.line));
+				if (flag) log.debug(String.format("READ  (POS:%05d) [%4d:%s]", this.pos, this.recLen, this.line));
 				
 				this.byLine = this.line.getBytes();
 				
 				String strFqRdr = FqType.FQ_RDR.getString(this.byLine);
 				if (flag) log.debug("FQ_RDR : [" + strFqRdr + "]");
 				if ("          ".equals(strFqRdr)) {
+					
+					this.strSendSeq = FqType.REC_SEQ.getString(this.byLine);
+					this.strDateTime = FqType.REC_DATE.getString(this.byLine) + FqType.REC_TIME.getString(this.byLine);
+					this.strDateTime = this.strDateTime.substring(0, 14);
+					
 					this.flagExecute = true;
 					return this.flagExecute;
 				}
@@ -113,6 +120,16 @@ public class SendFQ {
 		}
 		
 		return this.flagExecute;
+	}
+	
+	public String getSendSeq() throws Exception {
+		
+		return this.strSendSeq;
+	}
+	
+	public String getDateTime() throws Exception {
+		
+		return this.strDateTime;
 	}
 	
 	public boolean isFlag() throws Exception {
@@ -128,6 +145,8 @@ public class SendFQ {
 			FqType.FQ_RDR.setVal(byLine, FQ_READER);
 			
 			this.raf.write(this.byLine);
+			
+			if (flag) log.debug(String.format("WRITE (POS:%05d) [%4d:%s]", this.pos, this.recLen, new String(this.byLine)));
 		}
 	}
 	

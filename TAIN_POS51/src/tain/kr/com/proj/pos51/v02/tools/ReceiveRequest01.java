@@ -124,7 +124,7 @@ public class ReceiveRequest01 extends Thread {
 			this.strInFileName  = this.strInFileName.replaceAll("YYYYMMDD", DateTime.getInstance().getYYYYMMDD());
 			
 			this.strOutFileName = this.strOutFilePath + File.separator + this.strOutFileName;
-			this.strOutFileName = this.strOutFileName.replaceAll("YYYYMMDDHHMMSS", DateTime.getInstance().getYYYYMMDDHHMMSS());
+			//this.strOutFileName = this.strOutFileName.replaceAll("YYYYMMDDHHMMSS", DateTime.getInstance().getYYYYMMDDHHMMSS());
 			
 			this.strFqFileName  = this.strFqFilePatn + File.separator + this.strFqFileName;
 			this.strFqFileName  = this.strFqFileName.replaceAll("YYYYMMDD", DateTime.getInstance().getYYYYMMDD());
@@ -139,20 +139,36 @@ public class ReceiveRequest01 extends Thread {
 	
 	public void run() {
 		
-		try {
-			for (int i=0; i < 1; i++) {
-				
-				if (!transferFile())
-					break;
+		if (flag) {
+			/*
+			 * if the file FQ is not exist, then this module's going to end...
+			 */
+			File file = new File(this.strFqFileName);
+			if (!file.exists()) {
+				if (flag) log.error("ERROR : the file doesn't exist..[" + this.strFqFileName + "]");
+				return;
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			// wait some seconds
-			try { Thread.sleep(1000); } catch (InterruptedException e) {}
+		}
+		
+		if (flag) {
+			try {
+				for (int i=0; i < 1; i++) {
+					
+					if (!transferFile())
+						break;
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				// wait some seconds
+				try { Thread.sleep(1000); } catch (InterruptedException e) {}
+			}
 		}
 	}
 	
+	/*
+	 * FQ : send
+	 */
 	private SendFQ sendFQ = null;
 	
 	private boolean transferFile() throws Exception {
@@ -180,11 +196,13 @@ public class ReceiveRequest01 extends Thread {
 			try {
 				
 				// in file
+				this.strInFileName = this.strInFileName.replaceAll("SEQ", this.sendFQ.getSendSeq());
 				File inFile = new File(this.strInFileName);
 				FileInputStream inFileStream = new FileInputStream(inFile);
 				reader = new BufferedReader(new InputStreamReader(inFileStream, this.strInFileCharset));
 				
 				// out file
+				this.strOutFileName = this.strOutFileName.replaceAll("YYYYMMDDHHMMSS", this.sendFQ.getDateTime());
 				File outFile = new File(this.strOutFileName);
 				FileOutputStream outFileStream = new FileOutputStream(outFile);
 				OutputStreamWriter outWriter = new OutputStreamWriter(outFileStream, this.strOutFileCharset);
@@ -193,7 +211,7 @@ public class ReceiveRequest01 extends Thread {
 				String line = null;
 
 				while ((line = reader.readLine()) != null) {
-					if (!flag) log.debug("[" + line + "]");
+					if (flag) log.debug("[" + line + "]");
 					
 					writer.println(line);
 				}
