@@ -127,7 +127,7 @@ public class DeliveryResult03 extends Thread {
 			 * change parameters
 			 */
 			this.strInFileName  = this.strInFilePath + File.separator + this.strInFileName;
-			this.strInFileName  = this.strInFileName.replaceAll("YYYYMMDDHHMMSS", DateTime.getInstance().getYYYYMMDDHHMMSS());
+			//this.strInFileName  = this.strInFileName.replaceAll("YYYYMMDDHHMMSS", DateTime.getInstance().getYYYYMMDDHHMMSS());
 
 			this.strOutFilePath = this.strOutFilePath.replaceAll("YYYYMMDD", DateTime.getInstance().getYYYYMMDD());
 			this.strOutFileName = this.strOutFilePath + File.separator + this.strOutFileName;
